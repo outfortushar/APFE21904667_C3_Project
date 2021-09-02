@@ -61,4 +61,22 @@ class RestaurantTest {
         assertThrows(itemNotFoundException.class, ()->restaurant.removeFromMenu("French fries"));
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>ORDER VALUE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    @Test
+    public void order_value_should_get_cumulative_total_when_collection_of_items_selected(){
+        restaurantCreation();
+        spoof = restaurant.getMenu();
+        assertEquals(506,restaurant.getOrderValue(spoof));
+    }
+
+    @Test
+    public void order_value_should_reduce_cumulative_total_when_an_item_removed(){
+        restaurantCreation();
+        int total = restaurant.getOrderValue(spoof);
+        int afterTotal = spoof.get(1).getPrice();
+        spoof.remove(1);
+        assertEquals(total-afterTotal,restaurant.getOrderValue(spoof));
+    }
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>ORDER VALUE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 }
